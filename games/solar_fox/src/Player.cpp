@@ -65,5 +65,11 @@ void Player::action(std::vector <IObjectToDraw *> &objects)
 
 void Player::impact(std::vector <IObjectToDraw *> &objects)
 {
-    (void)objects;
+    for (size_t i = 0; i < objects.size(); i++) {
+        if (objects[i] == this)
+            continue;
+        if (static_cast <Entity *> (objects[i])->getCoords().first == m_coord.first &&
+            static_cast <Entity *> (objects[i])->getCoords().second == m_coord.second)
+                m_toClear = true;
+    }
 }

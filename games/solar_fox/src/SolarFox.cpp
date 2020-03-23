@@ -96,13 +96,27 @@ namespace games {
         // déplacement du joueur + collisions + mort
                                                                     
         for (size_t i = 0; i < m_objectToDraw.size(); i++) {
-           static_cast <Entity*> (m_objectToDraw[i])->move();
-           static_cast <Entity*> (m_objectToDraw[i])->action(m_objectToDraw);
-           static_cast <Entity*> (m_objectToDraw[i])->impact(m_objectToDraw);
+           static_cast <Entity *> (m_objectToDraw[i])->move();
+           static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
+           static_cast <Entity *> (m_objectToDraw[i])->impact(m_objectToDraw);
         }
-        // si joueur meurt, on save le best score et on on quite le jeu
-        // m_player->movePlayer();
+        clearMemory();
         return m_objectToDraw;
+    }
+
+    void SolarFox::clearMemory(void)
+    {
+        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
+            if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
+                if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
+                    m_player = nullptr;
+                delete m_objectToDraw[i];
+                m_objectToDraw.erase(m_objectToDraw.begin() + i); // sup du vecteur
+                // m_objectToDraw[i] = nullptr;
+                return clearMemory();
+            }
+        }
+        if (m_player == nullptr) exit(0);
     }
 
     extern "C" {
@@ -112,3 +126,6 @@ namespace games {
         }
     }
 }
+
+
+// faire recursivité, des que tu sup un element, tu return ta fonction

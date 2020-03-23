@@ -27,6 +27,7 @@ namespace games {
             int applyInput (COMMAND userInput);
             std::vector <IObjectToDraw *> compute();
             void loadClassFromChar(char c, long int x, long int y);
+            void clearMemory(void);
     };
 
 }
