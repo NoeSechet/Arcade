@@ -109,7 +109,7 @@ namespace graphical {
     bool Graphic_ncurses::isAlreadyLoaded(IObjectToDraw * object) const
     {
         for (auto &a : m_assets) {
-            if (object->getId().find(a->getId()) == 0) {
+            if (object->getId().find(a->getId()) != std::string::npos) {
                 return true;
             }
         }
@@ -119,7 +119,7 @@ namespace graphical {
     std::string Graphic_ncurses::getObjectContent(IObjectToDraw *obj) const
     {
         for (auto &a : m_assets) {
-            if (obj->getId().find(a->getId()))
+            if (obj->getId().find(a->getId()) != std::string::npos)
                 return a->getValue();
         }
         return std::string("");
