@@ -43,7 +43,9 @@ class Player : public Entity {
         Type getType() const;
         std::string getValue() const;
         void setPlayerDirection(COMMAND d_direction);
-        void movePlayer();
+        void move(void);
+        void action(std::vector <IObjectToDraw *> &objects);
+        void impact(std::vector <IObjectToDraw *> &objects);
 };
 
 class Target : public Entity {

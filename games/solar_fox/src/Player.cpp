@@ -45,15 +45,25 @@ void Player::setPlayerDirection(COMMAND d_direction)
 }
 
 
-void Player::movePlayer()
+void Player::move(void)
 {
     if (m_timer.getElapsedSeconds() < 0.2) return;
     m_timer.restartTimer();
     switch (m_direction) {
-    case RIGHT: m_coord.second += 1; break;
-    case LEFT: m_coord.second -= 1; break;
-    case DOWN: m_coord.first += 1; break;
-    case UP: m_coord.first -= 1; break;
+    case RIGHT: m_coord.first += 1; break;
+    case LEFT: m_coord.first -= 1; break;
+    case DOWN: m_coord.second += 1; break;
+    case UP: m_coord.second -= 1; break;
     default: break;
     }
+}
+
+void Player::action(std::vector <IObjectToDraw *> &objects)
+{
+    (void)objects;
+}
+
+void Player::impact(std::vector <IObjectToDraw *> &objects)
+{
+    (void)objects;
 }

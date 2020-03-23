@@ -94,10 +94,13 @@ namespace games {
         // Gérer l'ia des montre
         // déplacement des tirs + collisions + dégats
         // déplacement du joueur + collisions + mort
-
-
+                                                                    
+        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
+           static_cast <Entity*> (m_objectToDraw[i])->move();
+           static_cast <Entity*> (m_objectToDraw[i])->action(m_objectToDraw);
+           static_cast <Entity*> (m_objectToDraw[i])->impact(m_objectToDraw);
+        }
         // si joueur meurt, on save le best score et on on quite le jeu
-         m_player->movePlayer();
         // m_player->movePlayer();
         return m_objectToDraw;
     }
