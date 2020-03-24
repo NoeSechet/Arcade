@@ -70,53 +70,57 @@ namespace games {
         assets.push_back(new Border(default_coord, "border", "./games/solar_fox/assets/border/"));
         assets.push_back(new Monster(default_coord, "monster", "./games/solar_fox/assets/monster/"));
         assets.push_back(new Target(default_coord, "target", "./games/solar_fox/assets/target/"));
-        assets.push_back(new Lazer(default_coord, "lazer", "./games/solar_fox/assets/lazer/"));
+        assets.push_back(new Lazer(default_coord, default_coord, Lazer::O_PLAYER, "lazer", "./games/solar_fox/assets/lazer/"));
         return assets;
     }
 
     int SolarFox::applyInput (COMMAND userInput)
     {
+        m_player->setCommand(userInput);
         switch (userInput) {
-        case UP: m_player->setPlayerDirection(userInput); break;
-        case DOWN: m_player->setPlayerDirection(userInput); break;
-        case LEFT: m_player->setPlayerDirection(userInput); break;
-        case RIGHT: m_player->setPlayerDirection(userInput); break;
-        case ACTION: break;
-        case MAIN_MENU: break;
-        case EXIT: break;
-        default: break;
+            case UP: m_player->setPlayerDirection(); break;
+            case DOWN: m_player->setPlayerDirection(); break;
+            case LEFT: m_player->setPlayerDirection(); break;
+            case RIGHT: m_player->setPlayerDirection(); break;
+            case ACTION: break;
+            case MAIN_MENU: break;
+            case EXIT: break;
+            default: break;
         }
         return 0;
     }
 
     std::vector <IObjectToDraw *> SolarFox::compute()
-    {
-        // Gérer l'ia des montre
-        // déplacement des tirs + collisions + dégats
-        // déplacement du joueur + collisions + mort
-                                                                    
-        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
+    {                                                   
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
            static_cast <Entity *> (m_objectToDraw[i])->move();
-           static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
+
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
            static_cast <Entity *> (m_objectToDraw[i])->impact(m_objectToDraw);
-        }
-        clearMemory();
+
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
+           static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
+        // clearMemory(m_objectToDraw);
         return m_objectToDraw;
     }
 
-    void SolarFox::clearMemory(void)
+    // probleme de clock ! quand apparait tu devrait deja te déplacer
+    void SolarFox::clearMemory(std::vector <IObjectToDraw *> &objects)
     {
-        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
-            if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
-                if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
+        for (size_t i = 0; i < objects.size(); i++) {
+            if (objects[i] == nullptr) {
+                exit(0);
+                objects.erase(objects.begin() + i);
+                return clearMemory(objects);
+            }
+            if (static_cast <Entity *> (objects[i])->getToClear() == true) {
+                if (static_cast <Entity *> (objects[i])->getId().compare("player"))
                     m_player = nullptr;
-                delete m_objectToDraw[i];
-                m_objectToDraw.erase(m_objectToDraw.begin() + i); // sup du vecteur
-                // m_objectToDraw[i] = nullptr;
-                return clearMemory();
+                objects.erase(objects.begin() + i);
+                return clearMemory(objects);
             }
         }
-        if (m_player == nullptr) exit(0);
+        // if (m_player == nullptr) exit(0);
     }
 
     extern "C" {

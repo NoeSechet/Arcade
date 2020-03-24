@@ -11,7 +11,6 @@
 #include "Entity.hpp"
 #include "../Timer.hpp"
 
-
 class Border : public Entity {
     public:
         Border(std::pair <long int, long int> coord, std::string id = "border", std::string path = "")
@@ -34,15 +33,17 @@ class Monster : public Entity {
 
 class Player : public Entity {
     private:
+        COMMAND m_command;
         COMMAND m_direction = NO_INPUT;
         Timer m_timer;
     public:
         Player(std::pair <long int, long int> coord, std::string id = "player_up", std::string path = "");
         ~Player();
+        void setCommand(COMMAND command);
         std::string getId() const; // pas de maj pour les id.
         Type getType() const;
         std::string getValue() const;
-        void setPlayerDirection(COMMAND d_direction);
+        void setPlayerDirection();
         void move(void);
         void action(std::vector <IObjectToDraw *> &objects);
         void impact(std::vector <IObjectToDraw *> &objects);
@@ -60,11 +61,22 @@ class Target : public Entity {
 
 class Lazer : public Entity {
     public:
-        Lazer(std::pair <long int, long int> coord, std::string id = "lazer", std::string path = "")
-            : Entity(coord, id, path) {};
-        ~Lazer() {};
-        std::string getId() const { return m_id; }; // pas de maj pour les id.
-        Type getType() const { return objects; };
-        std::string getValue() const { return ""; };
+    typedef enum OWNER {
+        O_MONSTER,
+        O_PLAYER
+    } OWNER;
+    private:
+        std::pair <long int, long int> m_movementFactor;
+        OWNER m_owner;
+        Timer m_timer;
+    public:
+        Lazer(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, OWNER owner = O_PLAYER, std::string id = "lazer", std::string path = "");
+        ~Lazer();
+        std::string getId() const;
+        Type getType() const;
+        std::string getValue() const;
+
+        void move(void);
+        void impact(std::vector <IObjectToDraw *> &objects);
 };
 #endif /* !ENTITIES */

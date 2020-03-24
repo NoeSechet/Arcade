@@ -31,8 +31,8 @@ class Entity : public IObjectToDraw {
         std::tuple <uint, uint, uint, uint> getSpritePos() const { return std::make_tuple(0, 0, 0, 0); };
 
         virtual void move(void) {};
-        virtual void action(std::vector <IObjectToDraw *> &objects) {};
-        virtual void impact(std::vector <IObjectToDraw *> &objects) {};
+        virtual void action(std::vector <IObjectToDraw *> &objects) { (void)objects; };
+        virtual void impact(std::vector <IObjectToDraw *> &objects) { (void)objects; };
 };
 
 // créer une fonction bool quidis si il reste des elements morts

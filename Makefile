@@ -16,14 +16,15 @@ games:
 
 graphicals:
 	make -C lib/ncurses
+	make -C lib/sdl
 	make -C lib/sfml
-
 
 clean:
 	make clean -C core
 	make clean -C games/solar_fox
 	make clean -C games/centiped
 	make clean -C lib/ncurses
+	make clean -C lib/sdl
 	make clean -C lib/sfml
 
 fclean: clean
@@ -31,6 +32,7 @@ fclean: clean
 	make fclean -C games/solar_fox
 	make fclean -C games/centiped
 	make fclean -C lib/ncurses
+	make fclean -C lib/sdl
 	make fclean -C lib/sfml
 
  re:	fclean all
