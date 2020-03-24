@@ -31,32 +31,34 @@ std::string Player::getValue() const
     return "";
 }
 
-void Player::setPlayerDirection(void)
-{
-    switch (m_command) {
-    case UP: m_id = "player_up"; m_direction = UP; break;
-    case DOWN: m_id = "player_down"; m_direction = DOWN; break;
-    case LEFT: m_id = "player_left"; m_direction = LEFT; break;
-    case RIGHT: m_id = "player_right"; m_direction = RIGHT; break;
-    default: break;
-    }
-}
-
 void Player::setCommand(COMMAND command)
 {
     m_command = command;
 }
+
+
+void Player::setPlayerDirection()
+{
+    switch (m_command) {
+        case UP: m_id = "player_up"; m_direction = UP; break;
+        case DOWN: m_id = "player_down"; m_direction = DOWN; break;
+        case LEFT: m_id = "player_left"; m_direction = LEFT; break;
+        case RIGHT: m_id = "player_right"; m_direction = RIGHT; break;
+        default: break;
+    }
+}
+
 
 void Player::move(void)
 {
     if (m_timer.getElapsedSeconds() < 0.2) return;
     m_timer.restartTimer();
     switch (m_direction) {
-    case RIGHT: m_coord.first += 1; break;
-    case LEFT: m_coord.first -= 1; break;
-    case DOWN: m_coord.second += 1; break;
-    case UP: m_coord.second -= 1; break;
-    default: break;
+        case RIGHT: m_coord.first += 1; break;
+        case LEFT: m_coord.first -= 1; break;
+        case DOWN: m_coord.second += 1; break;
+        case UP: m_coord.second -= 1; break;
+        default: break;
     }
 }
 
@@ -65,17 +67,15 @@ void Player::move(void)
 // et faire tout ala mano;, pâs de define
 void Player::action(std::vector <IObjectToDraw *> &objects)
 {
-    (void) objects;
-
+    (void)objects;
     if (m_command != ACTION) return;
     switch (m_direction) {
-    // case UP: objects.push_back(new Lazer(m_coord, M_FACTOR_UP)); break;
-    // case DOWN: objects.push_back(new Lazer(m_coord, M_FACTOR_DOWN)); break;
-    // case RIGHT: objects.push_back(new Lazer(m_coord, M_FACTOR_RIGHT)); break;
-    // case LEFT: objects.push_back(new Lazer(m_coord, M_FACTOR_LEFT)); break;
-    default: break;
+        case RIGHT:  break;
+        case LEFT:  break;
+        case DOWN:  break;
+        case UP:  break;
+        default: break;
     }
-
 }
 
 void Player::impact(std::vector <IObjectToDraw *> &objects)

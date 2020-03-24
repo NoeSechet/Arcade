@@ -70,7 +70,7 @@ namespace games {
         assets.push_back(new Border(default_coord, "border", "./games/solar_fox/assets/border/"));
         assets.push_back(new Monster(default_coord, "monster", "./games/solar_fox/assets/monster/"));
         assets.push_back(new Target(default_coord, "target", "./games/solar_fox/assets/target/"));
-        assets.push_back(new Lazer(default_coord, default_coord, Lazer::OWNER::O_MONSTER, "lazer", "./games/solar_fox/assets/lazer/"));
+        assets.push_back(new Lazer(default_coord, default_coord, Lazer::O_PLAYER, "lazer", "./games/solar_fox/assets/lazer/"));
         return assets;
     }
 
@@ -78,21 +78,22 @@ namespace games {
     {
         m_player->setCommand(userInput);
         switch (userInput) {
-        case UP: m_player->setPlayerDirection(); break;
-        case DOWN: m_player->setPlayerDirection(); break;
-        case LEFT: m_player->setPlayerDirection(); break;
-        case RIGHT: m_player->setPlayerDirection(); break;
-        case MAIN_MENU: break;
-        case EXIT: break;
-        default: break;
+            case UP: m_player->setPlayerDirection(); break;
+            case DOWN: m_player->setPlayerDirection(); break;
+            case LEFT: m_player->setPlayerDirection(); break;
+            case RIGHT: m_player->setPlayerDirection(); break;
+            case ACTION: break;
+            case MAIN_MENU: break;
+            case EXIT: break;
+            default: break;
         }
         return 0;
     }
 
     std::vector <IObjectToDraw *> SolarFox::compute()
-    {                 
+    {                                                   
         for (size_t i = 0; i < m_objectToDraw.size(); i++) {
-        //    static_cast <Entity *> (m_objectToDraw[i])->move(); // maybe move before
+           static_cast <Entity *> (m_objectToDraw[i])->move();
            static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
            static_cast <Entity *> (m_objectToDraw[i])->impact(m_objectToDraw);
         }
@@ -111,8 +112,7 @@ namespace games {
                 return clearMemory();
             }
         }
-        if (m_player == nullptr)
-            exit(0); // Quitter le jeu mais comment ?
+        if (m_player == nullptr) exit(0);
     }
 
     extern "C" {
@@ -122,3 +122,6 @@ namespace games {
         }
     }
 }
+
+
+// faire recursivité, des que tu sup un element, tu return ta fonction

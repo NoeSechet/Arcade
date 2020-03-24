@@ -11,10 +11,10 @@
 #include "Entity.hpp"
 #include "../Timer.hpp"
 
-#define M_FACTOR_UP std::make_pair(0, -1)
-#define M_FACTOR_DOWN std::make_pair(0, 1)
-#define M_FACTOR_LEFT std::make_pair(-1, 0)
-#define M_FACTOR_RIGHT std::make_pair(0, 1)
+// #define M_FACTOR_UP std::make_pair(0, -1)
+// #define M_FACTOR_DOWN std::make_pair(0, 1)
+// #define M_FACTOR_LEFT std::make_pair(-1, 0)
+// #define M_FACTOR_RIGHT std::make_pair(0, 1)
 
 class Border : public Entity {
     public:
@@ -48,10 +48,10 @@ class Player : public Entity {
         std::string getId() const; // pas de maj pour les id.
         Type getType() const;
         std::string getValue() const;
-        void setPlayerDirection(void);
+        void setPlayerDirection();
         void move(void);
         void action(std::vector <IObjectToDraw *> &objects);
-        void impact(std::vector <IObjectToDraw *> &objects);        
+        void impact(std::vector <IObjectToDraw *> &objects);
 };
 
 class Target : public Entity {
@@ -74,11 +74,10 @@ class Lazer : public Entity {
         std::pair <long int, long int> m_movementFactor;
         OWNER m_owner;
     public:
-        Lazer(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, OWNER owner = O_MONSTER, std::string id = "lazer", std::string path = "");
+        Lazer(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, OWNER owner = O_PLAYER, std::string id = "lazer", std::string path = "");
         ~Lazer();
         std::string getId() const;
         Type getType() const;
         std::string getValue() const;
 };
-
 #endif /* !ENTITIES */
