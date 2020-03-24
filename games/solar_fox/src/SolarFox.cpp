@@ -70,18 +70,18 @@ namespace games {
         assets.push_back(new Border(default_coord, "border", "./games/solar_fox/assets/border/"));
         assets.push_back(new Monster(default_coord, "monster", "./games/solar_fox/assets/monster/"));
         assets.push_back(new Target(default_coord, "target", "./games/solar_fox/assets/target/"));
-        assets.push_back(new Lazer(default_coord, "lazer", "./games/solar_fox/assets/lazer/"));
+        assets.push_back(new Lazer(default_coord, default_coord, Lazer::OWNER::O_MONSTER, "lazer", "./games/solar_fox/assets/lazer/"));
         return assets;
     }
 
     int SolarFox::applyInput (COMMAND userInput)
     {
+        m_player->setCommand(userInput);
         switch (userInput) {
-        case UP: m_player->setPlayerDirection(userInput); break;
-        case DOWN: m_player->setPlayerDirection(userInput); break;
-        case LEFT: m_player->setPlayerDirection(userInput); break;
-        case RIGHT: m_player->setPlayerDirection(userInput); break;
-        case ACTION: break;
+        case UP: m_player->setPlayerDirection(); break;
+        case DOWN: m_player->setPlayerDirection(); break;
+        case LEFT: m_player->setPlayerDirection(); break;
+        case RIGHT: m_player->setPlayerDirection(); break;
         case MAIN_MENU: break;
         case EXIT: break;
         default: break;
@@ -90,13 +90,9 @@ namespace games {
     }
 
     std::vector <IObjectToDraw *> SolarFox::compute()
-    {
-        // Gérer l'ia des montre
-        // déplacement des tirs + collisions + dégats
-        // déplacement du joueur + collisions + mort
-                                                                    
+    {                 
         for (size_t i = 0; i < m_objectToDraw.size(); i++) {
-           static_cast <Entity *> (m_objectToDraw[i])->move();
+        //    static_cast <Entity *> (m_objectToDraw[i])->move(); // maybe move before
            static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
            static_cast <Entity *> (m_objectToDraw[i])->impact(m_objectToDraw);
         }
@@ -110,13 +106,13 @@ namespace games {
             if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
                 if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
                     m_player = nullptr;
-                delete m_objectToDraw[i];
-                m_objectToDraw.erase(m_objectToDraw.begin() + i); // sup du vecteur
-                // m_objectToDraw[i] = nullptr;
+                delete static_cast <Entity *> (m_objectToDraw[i]);
+                m_objectToDraw.erase(m_objectToDraw.begin() + i);
                 return clearMemory();
             }
         }
-        if (m_player == nullptr) exit(0);
+        if (m_player == nullptr)
+            exit(0); // Quitter le jeu mais comment ?
     }
 
     extern "C" {
@@ -126,6 +122,3 @@ namespace games {
         }
     }
 }
-
-
-// faire recursivité, des que tu sup un element, tu return ta fonction

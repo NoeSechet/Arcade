@@ -31,25 +31,27 @@ std::string Player::getValue() const
     return "";
 }
 
-void Player::setPlayerDirection(COMMAND d_direction)
+void Player::setPlayerDirection(void)
 {
-    m_direction = d_direction;
-
-    switch (d_direction) {
-    case UP: m_id = "player_up"; break;
-    case DOWN: m_id = "player_down"; break;
-    case LEFT: m_id = "player_left"; break;
-    case RIGHT: m_id = "player_right"; break;
+    switch (m_command) {
+    case UP: m_id = "player_up"; m_direction = UP; break;
+    case DOWN: m_id = "player_down"; m_direction = DOWN; break;
+    case LEFT: m_id = "player_left"; m_direction = LEFT; break;
+    case RIGHT: m_id = "player_right"; m_direction = RIGHT; break;
     default: break;
     }
 }
 
+void Player::setCommand(COMMAND command)
+{
+    m_command = command;
+}
 
 void Player::move(void)
 {
     if (m_timer.getElapsedSeconds() < 0.2) return;
     m_timer.restartTimer();
-    switch (m_direction) {
+    switch (m_command) {
     case RIGHT: m_coord.first += 1; break;
     case LEFT: m_coord.first -= 1; break;
     case DOWN: m_coord.second += 1; break;
@@ -60,7 +62,17 @@ void Player::move(void)
 
 void Player::action(std::vector <IObjectToDraw *> &objects)
 {
-    (void)objects;
+    (void) objects;
+
+    if (m_command != ACTION) return;
+    switch (m_direction) {
+    // case UP: objects.push_back(new Lazer(m_coord, M_FACTOR_UP)); break;
+    // case DOWN: objects.push_back(new Lazer(m_coord, M_FACTOR_DOWN)); break;
+    // case RIGHT: objects.push_back(new Lazer(m_coord, M_FACTOR_RIGHT)); break;
+    // case LEFT: objects.push_back(new Lazer(m_coord, M_FACTOR_LEFT)); break;
+    default: break;
+    }
+
 }
 
 void Player::impact(std::vector <IObjectToDraw *> &objects)

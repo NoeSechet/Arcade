@@ -22,7 +22,7 @@ class DLLoader {
             void *handle = dlopen(defaultLib.c_str(), RTLD_LAZY);
 
             if (!handle) {
-                fprintf(stderr, "nope wrong lib name\n");
+                fprintf(stderr, "Wrong library names : <%s>\n", defaultLib.c_str());
                 exit (EXIT_FAILURE);
             }
             return handle;

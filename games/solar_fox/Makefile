@@ -11,6 +11,7 @@ RM	= rm -f
 
 SRCS	= ./src/SolarFox.cpp \
 		./src/Player.cpp	\
+		./src/Lazer.cpp	\
 
 OBJS	= $(SRCS:.cpp=.o)
 
