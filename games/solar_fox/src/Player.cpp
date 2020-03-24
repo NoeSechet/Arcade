@@ -51,7 +51,7 @@ void Player::move(void)
 {
     if (m_timer.getElapsedSeconds() < 0.2) return;
     m_timer.restartTimer();
-    switch (m_command) {
+    switch (m_direction) {
     case RIGHT: m_coord.first += 1; break;
     case LEFT: m_coord.first -= 1; break;
     case DOWN: m_coord.second += 1; break;
@@ -60,6 +60,9 @@ void Player::move(void)
     }
 }
 
+
+// détecter la barre espace
+// et faire tout ala mano;, pâs de define
 void Player::action(std::vector <IObjectToDraw *> &objects)
 {
     (void) objects;

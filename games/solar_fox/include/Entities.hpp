@@ -11,10 +11,10 @@
 #include "Entity.hpp"
 #include "../Timer.hpp"
 
-// #define M_FACTOR_UP std::make_pair(0, -1)
-// #define M_FACTOR_DOWN std::make_pair(0, 1)
-// #define M_FACTOR_LEFT std::make_pair(-1, 0)
-// #define M_FACTOR_RIGHT std::make_pair(0, 1)
+#define M_FACTOR_UP std::make_pair(0, -1)
+#define M_FACTOR_DOWN std::make_pair(0, 1)
+#define M_FACTOR_LEFT std::make_pair(-1, 0)
+#define M_FACTOR_RIGHT std::make_pair(0, 1)
 
 class Border : public Entity {
     public:

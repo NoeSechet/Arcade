@@ -19,7 +19,7 @@ class Entity : public IObjectToDraw {
         bool m_toClear = false;
     public:
         Entity(std::pair <long int, long int> coord, std::string id, std::string path) { m_coord = coord; m_id = id; m_path = path; };
-        virtual ~Entity();
+        ~Entity();
         virtual std::string getId() const { return "Entity"; };
         bool getToClear(void) const { return m_toClear; };
         void setId(std::string id) { m_id = id; };

@@ -106,7 +106,7 @@ namespace games {
             if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
                 if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
                     m_player = nullptr;
-                delete static_cast <Entity *> (m_objectToDraw[i]);
+                // delete static_cast <Entity *> (m_objectToDraw[i]);
                 m_objectToDraw.erase(m_objectToDraw.begin() + i);
                 return clearMemory();
             }

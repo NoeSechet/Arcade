@@ -5,8 +5,7 @@
 ** LAZER
 */
 
-#include "../include/Entities.hpp"
-#include "../../../GlobalHeaders.hpp"
+#include "Entities.hpp"
 
 Lazer::Lazer(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor, OWNER owner,  std::string id, std::string path)
 : Entity(coord, id, path)
