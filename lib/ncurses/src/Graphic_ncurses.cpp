@@ -66,8 +66,7 @@ namespace graphical {
             case KEY_RIGHT: return RIGHT;
             case KEY_DOWN: return DOWN;
             case KEY_LEFT: return LEFT;
-            case KEY_BACKSPACE: return ACTION;
-            case 'm': return ACTION; // DEBUG
+            case ' ': return ACTION;
             case 'q': return PREV_GRAPH;
             case 'e': return NEXT_GRAPH;
             case 'a': return PREV_GAME;

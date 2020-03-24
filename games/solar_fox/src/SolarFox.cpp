@@ -104,10 +104,13 @@ namespace games {
     void SolarFox::clearMemory(void)
     {
         for (size_t i = 0; i < m_objectToDraw.size(); i++) {
+            if (m_objectToDraw[i] == nullptr) {
+                m_objectToDraw.erase(m_objectToDraw.begin() + i);
+                return clearMemory();
+            }
             if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
                 if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
                     m_player = nullptr;
-                // delete static_cast <Entity *> (m_objectToDraw[i]);
                 m_objectToDraw.erase(m_objectToDraw.begin() + i);
                 return clearMemory();
             }
