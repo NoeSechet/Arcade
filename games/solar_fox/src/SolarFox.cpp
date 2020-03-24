@@ -92,30 +92,35 @@ namespace games {
 
     std::vector <IObjectToDraw *> SolarFox::compute()
     {                                                   
-        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
            static_cast <Entity *> (m_objectToDraw[i])->move();
-           static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
+
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
            static_cast <Entity *> (m_objectToDraw[i])->impact(m_objectToDraw);
-        }
-        clearMemory();
+
+        for (size_t i = 0; i < m_objectToDraw.size(); i++)
+           static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
+        // clearMemory(m_objectToDraw);
         return m_objectToDraw;
     }
 
-    void SolarFox::clearMemory(void)
+    // probleme de clock ! quand apparait tu devrait deja te déplacer
+    void SolarFox::clearMemory(std::vector <IObjectToDraw *> &objects)
     {
-        for (size_t i = 0; i < m_objectToDraw.size(); i++) {
-            if (m_objectToDraw[i] == nullptr) {
-                m_objectToDraw.erase(m_objectToDraw.begin() + i);
-                return clearMemory();
+        for (size_t i = 0; i < objects.size(); i++) {
+            if (objects[i] == nullptr) {
+                exit(0);
+                objects.erase(objects.begin() + i);
+                return clearMemory(objects);
             }
-            if (static_cast <Entity *> (m_objectToDraw[i])->getToClear() == true) {
-                if (static_cast <Entity *> (m_objectToDraw[i])->getId().compare("player"))
+            if (static_cast <Entity *> (objects[i])->getToClear() == true) {
+                if (static_cast <Entity *> (objects[i])->getId().compare("player"))
                     m_player = nullptr;
-                m_objectToDraw.erase(m_objectToDraw.begin() + i);
-                return clearMemory();
+                objects.erase(objects.begin() + i);
+                return clearMemory(objects);
             }
         }
-        if (m_player == nullptr) exit(0);
+        // if (m_player == nullptr) exit(0);
     }
 
     extern "C" {

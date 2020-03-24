@@ -25,6 +25,7 @@ namespace graphical {
     bool Graphic_ncurses::init()
     {
         if (initscr() == nullptr) return false;
+        curs_set(0);
         noecho();
         nodelay(stdscr, true);
         keypad(stdscr, true);

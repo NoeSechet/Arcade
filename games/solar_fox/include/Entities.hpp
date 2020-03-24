@@ -11,11 +11,6 @@
 #include "Entity.hpp"
 #include "../Timer.hpp"
 
-// #define M_FACTOR_UP std::make_pair(0, -1)
-// #define M_FACTOR_DOWN std::make_pair(0, 1)
-// #define M_FACTOR_LEFT std::make_pair(-1, 0)
-// #define M_FACTOR_RIGHT std::make_pair(0, 1)
-
 class Border : public Entity {
     public:
         Border(std::pair <long int, long int> coord, std::string id = "border", std::string path = "")
@@ -73,11 +68,15 @@ class Lazer : public Entity {
     private:
         std::pair <long int, long int> m_movementFactor;
         OWNER m_owner;
+        Timer m_timer;
     public:
         Lazer(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, OWNER owner = O_PLAYER, std::string id = "lazer", std::string path = "");
         ~Lazer();
         std::string getId() const;
         Type getType() const;
         std::string getValue() const;
+
+        void move(void);
+        void impact(std::vector <IObjectToDraw *> &objects);
 };
 #endif /* !ENTITIES */

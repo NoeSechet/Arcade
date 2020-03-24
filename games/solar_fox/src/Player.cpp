@@ -36,7 +36,6 @@ void Player::setCommand(COMMAND command)
     m_command = command;
 }
 
-
 void Player::setPlayerDirection()
 {
     switch (m_command) {
@@ -48,23 +47,19 @@ void Player::setPlayerDirection()
     }
 }
 
-
 void Player::move(void)
 {
     if (m_timer.getElapsedSeconds() < 0.2) return;
     m_timer.restartTimer();
     switch (m_direction) {
-        // case RIGHT: m_coord.first += 1; break;
-        // case LEFT: m_coord.first -= 1; break;
-        // case DOWN: m_coord.second += 1; break;
-        // case UP: m_coord.second -= 1; break;
+        case RIGHT: m_coord.first += 1; break;
+        case LEFT: m_coord.first -= 1; break;
+        case DOWN: m_coord.second += 1; break;
+        case UP: m_coord.second -= 1; break;
         default: break;
     }
 }
 
-
-// détecter la barre espace
-// et faire tout ala mano;, pâs de define
 void Player::action(std::vector <IObjectToDraw *> &objects)
 {
     if (m_command != ACTION) return;
