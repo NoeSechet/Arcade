@@ -34,7 +34,7 @@ class Monster : public Entity {
 
 class Player : public Entity {
     private:
-        COMMAND m_direction;
+        COMMAND m_direction = NO_INPUT;
         Timer m_timer;
     public:
         Player(std::pair <long int, long int> coord, std::string id = "player_up", std::string path = "");
