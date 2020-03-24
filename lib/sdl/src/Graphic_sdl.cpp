@@ -9,11 +9,9 @@
 
 namespace graphical {
 
-    Graphic_sdl::Graphic_sdl(std::pair<uint, uint> winSize)
-        : m_name("sdl"), m_winSize(winSize)
+    Graphic_sdl::Graphic_sdl()
+        : m_name("sdl"), m_winSize(std::make_pair<uint, uint>(1000, 800))
     {
-        m_buttonSqr.w = 100;
-        m_buttonSqr.h = 75;
         init();
     }
 
@@ -32,8 +30,22 @@ namespace graphical {
         return true;
     }
 
-    bool Graphic_sdl::initAssets(std::vector<IObjectToDraw *> assets)
+    bool Graphic_sdl::initAssets(std::vector<IObjectToDraw *> assetList)
     {
+        for (auto &asset : assetList) {
+            if (isAlreadyLoaded(asset)) {
+                std::cout << "already loaded" << std::endl;
+                continue;
+            }
+            if (asset->getId().compare("level") == 0) {
+                if ((m_winSize.first = asset->getCoords().first * m_mapScale.first) == 0 ||
+                (m_winSize.second = asset->getCoords().second * m_mapScale.second) == 0)
+                    throw std::logic_error("Invalid map size.");
+                SDL_SetWindowSize(m_window, m_mapScale.first, m_mapScale.second);
+            } else if (CheckAssetPath(asset->getPath()) == true) {
+                m_assetList.push_back(new AssetSDL(asset->getId(), asset->getType(), asset->getPath(), asset->getSpritePos(), renderer));
+            }
+        }
         return true;
     }
 
@@ -80,27 +92,75 @@ namespace graphical {
         return NO_INPUT;
     }
 
-    bool Graphic_sdl::draw(std::vector<IObjectToDraw *> objects)
+    bool Graphic_sdl::draw(std::vector<IObjectToDraw *> objectList)
     {
         SDL_RenderClear(renderer);
-/*
-        for (auto &ite : objects) {
-            // std::cout << ite->getCoords().first << " " << ite->getCoords().second << std::endl;
-            m_buttonSqr.setPosition(ite->getCoords().first, ite->getCoords().second);
-            m_buttonSqr.setFillColor(sf::Color(rand()));
-            m_window.draw(m_buttonSqr);
-            // std::cout << "salut" << std::endl;
+        AssetSDL *asset = nullptr;
+        std::pair<uint, uint> objCoord = {0,0};
+        SDL_Rect texr;
+
+        for (auto &obj : objectList)
+        {
+            if ((asset = getObjectContent(obj)) == nullptr) {
+                // std::cerr << "Asset not found" << std::endl;
+                continue;
+            }
+            if ((m_textHolder = asset->getTex()) == nullptr) {
+                // std::cerr << "Sprite not found" << std::endl;
+                continue;
+            }
+            if (obj->getId().find("SEL") != std::string::npos) {
+                SDL_SetTextureColorMod(m_textHolder, 100, 100, 255);
+            } else {
+                SDL_SetTextureColorMod(m_textHolder, 255, 255, 255);
+            }
+            objCoord = obj->getCoords();
+            texr.x = objCoord.first * m_mapScale.first;
+            texr.y = objCoord.second * m_mapScale.second;
+            texr.w = asset->getRect().w;
+            texr.h = asset->getRect().h;
+            SDL_RenderCopy(renderer, m_textHolder, NULL, &texr);
         }
-*/
+
         SDL_RenderPresent(renderer);
         return true;
     }
 
-    extern "C" {
-        IGraphicalInterface *LoadLibrary()
-        {
-            return new Graphic_sdl(std::make_pair(1000, 800));
+    bool Graphic_sdl::isAlreadyLoaded(IObjectToDraw * object) const
+    {
+        for (auto &asset : m_assetList) {
+            if (object->getId().find(asset->getId()) == 0) {
+                return true;
+            }
         }
+        return false;
     }
 
+    AssetSDL *Graphic_sdl::getObjectContent(IObjectToDraw *object) const
+    {
+        // std::cout << object->getId() << std::endl;
+        for (auto asset : m_assetList) {
+            if (object->getId().find(asset->getId()) == 0) {
+                return asset;
+            }
+        }
+        return nullptr;
+    }
+
+    bool Graphic_sdl::CheckAssetPath(std::string path)
+    {
+        struct stat buffer;
+
+        if (stat (path.append("texture.png").c_str(), &buffer) == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    extern "C" {
+        IGraphicalInterface *entryPoint()
+        {
+            return new Graphic_sdl();
+        }
+    }
 }
