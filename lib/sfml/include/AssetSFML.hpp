@@ -41,12 +41,14 @@ class AssetSFML : public IObjectToDraw {
         };
         ~AssetSFML() {};
 
+        // -- Interface Functions
         std::string getId() const { return m_id; };
         std::string getPath() const { return std::string(""); };
         Type getType() const {return m_type; };
         std::string getValue() const { return m_value; };
         std::pair<long int, long int> getCoords() const { return m_coord; };
         std::tuple <uint, uint, uint, uint> getSpritePos() const { return m_spriPos; }
+        // --
 
         std::shared_ptr<sf::Sprite> getSprite() { return m_spr; }
 

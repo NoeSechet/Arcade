@@ -33,7 +33,7 @@ class Monster : public Entity {
 
 class Player : public Entity {
     private:
-        COMMAND m_command;
+        COMMAND m_command = NO_INPUT;
         COMMAND m_direction = NO_INPUT;
         Timer m_timer;
     public:

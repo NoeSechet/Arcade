@@ -10,7 +10,7 @@
 namespace graphical {
 
     Graphic_sfml::Graphic_sfml()
-        : m_name("sfml"), m_winSize(std::make_pair<uint, uint>(1000, 800))
+        : m_name("sfml"), m_winSize(std::make_pair<uint, uint>(0, 0))
     {
         init();
     }
@@ -24,7 +24,17 @@ namespace graphical {
     {
         std::cout << "Initialized sfml lib" << std::endl;
 
-        m_window.create(sf::VideoMode(1000, 800), "sfml window");
+        return true;
+    }
+
+    bool Graphic_sfml::InitWindow(uint width, uint height)
+    {
+        if (width == 0 || height == 0) {
+            std::cout << "Level module undetected, resizing window..." << std::endl;
+            width = 1000;
+            height = 800;
+        }
+        m_window.create(sf::VideoMode(width, height), "sfml window");
         m_window.setFramerateLimit(30);
         m_window.setKeyRepeatEnabled(false);
 
@@ -34,19 +44,19 @@ namespace graphical {
     bool Graphic_sfml::initAssets(std::vector<IObjectToDraw *> assetList)
     {
         for (auto &asset : assetList) {
-            if (isAlreadyLoaded(asset)) {
-                std::cout << "already loaded" << std::endl;
+            if (isAlreadyLoaded(asset))
                 continue;
+
+            if (asset->getId().compare("level") == 0)
+            {
+                m_winSize.first = asset->getCoords().first * m_mapScale.first;
+                m_winSize.second = asset->getCoords().second * m_mapScale.second;
             }
-            if (asset->getId().compare("level") == 0) {
-                if ((m_winSize.first = asset->getCoords().first * m_mapScale.first) == 0 ||
-                (m_winSize.second = asset->getCoords().second * m_mapScale.second) == 0)
-                    throw std::logic_error("Invalid map size.");
-                m_window.setSize(sf::Vector2u(m_winSize.first, m_winSize.second));
-            } else if (CheckAssetPath(asset->getPath()) == true) {
+            else if (CheckAssetPath(asset->getPath()) == true) {
                 m_assetList.push_back(new AssetSFML(asset->getId(),asset->getType(),asset->getPath(),asset->getSpritePos()));
             }
         }
+        InitWindow(m_winSize.first, m_winSize.second);
         return true;
     }
 
@@ -81,27 +91,28 @@ namespace graphical {
     bool Graphic_sfml::draw(std::vector<IObjectToDraw *> objectList)
     {
         m_window.clear();
-        AssetSFML *asset = nullptr;
+        AssetSFML *assetPtr = nullptr;
+        std::shared_ptr<sf::Sprite> spritePtr = nullptr;
         std::pair<uint, uint> objCoord = {0,0};
 
         for (auto &obj : objectList)
         {
-            if ((asset = getObjectContent(obj)) == nullptr) {
-                // std::cerr << "Asset not found" << std::endl;
+            if ((assetPtr = getObjectContent(obj)) == nullptr)
                 continue;
-            }
-            if ((m_spriteHolder = asset->getSprite()) == nullptr) {
-                // std::cerr << "Sprite not found" << std::endl;
+            if ((spritePtr = assetPtr->getSprite()) == nullptr)
                 continue;
-            }
-            if (obj->getId().find("SEL") != std::string::npos) {
-                m_spriteHolder->setColor(sf::Color(100, 100, 255, 255));
-            } else {
-                m_spriteHolder->setColor(sf::Color(255, 255, 255, 255));
-            }
+
+            if (obj->getId().find("SEL") != std::string::npos)
+                spritePtr->setColor(sf::Color(100, 100, 255, 255));
+            else
+                spritePtr->setColor(sf::Color(255, 255, 255, 255));
+
             objCoord = obj->getCoords();
-            m_spriteHolder->setPosition(objCoord.first * m_mapScale.first, objCoord.second * m_mapScale.second);
-            m_window.draw(*m_spriteHolder);
+            spritePtr->setPosition(
+                objCoord.first * m_mapScale.first - std::get<2>(assetPtr->getSpritePos()) / 4,  // 4 because the m_mapscale values are not the same
+                objCoord.second * m_mapScale.second - std::get<3>(assetPtr->getSpritePos()) / 2 // 2 because the m_mapscale values are not the same
+            );
+            m_window.draw(*spritePtr);
         }
 
         m_window.display();
