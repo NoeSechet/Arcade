@@ -37,7 +37,6 @@ class Player : public Entity {
         Timer m_timerShoot;
         COMMAND m_command = NO_INPUT;
         COMMAND m_direction = NO_INPUT;
-        Timer m_timer;
     public:
         Player(std::pair <long int, long int> coord, std::string id = "player_up", std::string path = "");
         ~Player();

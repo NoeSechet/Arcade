@@ -87,6 +87,7 @@ int Core::loop()
         m_graphLib->draw(m_gameLib->compute());
     }
 
+    // m_graphLib->initAssets((m_coreMenu->getAssets()));
     // while (m_input != EXIT)
     // {
     //     m_input = m_graphLib->getInput();
