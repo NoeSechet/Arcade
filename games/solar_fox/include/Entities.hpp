@@ -21,20 +21,26 @@ class Border : public Entity {
         std::string getValue() const { return ""; };
 };
 
-class Monster : public Entity {
+class Monster : public Entity { // commencer à bouger à au premier choix // deux facteru de mouvement
+    private:
+        COMMAND m_directionLazer = DOWN;
+        Timer m_timerShoot;
     public:
-        Monster(std::pair <long int, long int> coord, std::string id = "monster", std::string path = "")
-            : Entity(coord, id, path) {};
-        ~Monster() {};
-        std::string getId() const { return m_id; }; // pas de maj pour les id.
-        Type getType() const { return objects; };
-        std::string getValue() const { return ""; };
+        Monster(std::pair <long int, long int> coord, std::string id = "monster", std::string path = "");
+        ~Monster();
+        void setDirectionLazer(COMMAND direction);
+        std::string getId() const;
+        Type getType() const;
+        std::string getValue() const;
+        void move(void);
+        void action(std::vector <IObjectToDraw *> &objects);
+        void impact(std::vector <IObjectToDraw *> &objects); 
 };
 
 class Player : public Entity {
     private:
-        COMMAND m_command;
-        COMMAND m_direction;
+        COMMAND m_command = NO_INPUT;
+        COMMAND m_direction = NO_INPUT;
         Timer m_timerMove;
         Timer m_timerShoot;
     public:

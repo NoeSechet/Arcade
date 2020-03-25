@@ -25,7 +25,10 @@ namespace games {
         std::pair <long int, long int> coord = {x, y};
 
         switch (c) {
-            case 'M': m_objectToDraw.push_back(new Monster(coord)); break;
+            case '1': m_objectToDraw.push_back(new Monster(coord)); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(RIGHT); break;
+            case '2': m_objectToDraw.push_back(new Monster(coord)); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(DOWN); break;
+            case '3': m_objectToDraw.push_back(new Monster(coord)); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(LEFT); break;
+            case '4': m_objectToDraw.push_back(new Monster(coord)); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(UP); break;
             case '^': m_player = new Player(coord); m_objectToDraw.push_back(m_player);  break;
             case '*': m_objectToDraw.push_back(new Target(coord)); break;
             case '#': m_objectToDraw.push_back(new Border(coord)); break;
