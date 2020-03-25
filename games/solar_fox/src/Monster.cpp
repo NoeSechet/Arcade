@@ -7,10 +7,12 @@
 
 #include "Entities.hpp"
 
-Monster::Monster(std::pair <long int, long int> coord, std::string id, std::string path)
+Monster::Monster(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor, std::string id, std::string path)
 : Entity(coord, id, path)
 {
     m_timerShoot.startTimer();
+    m_timerMove.startTimer();
+    m_movementFactor = movementFactor;
 }
 
 Monster::~Monster()
@@ -41,6 +43,10 @@ std::string Monster::getValue() const
 
 void Monster::move(void)
 {
+    if (m_timerMove.getElapsedSeconds() < 0.5) return;
+    m_timerMove.restartTimer();
+    m_coord.first += m_movementFactor.first;
+    m_coord.second += m_movementFactor.second;
 }
 
 void Monster::action(std::vector <IObjectToDraw *> &objects)
@@ -58,8 +64,20 @@ void Monster::action(std::vector <IObjectToDraw *> &objects)
 
 void Monster::impact(std::vector <IObjectToDraw *> &objects)
 {
-    (void)objects;
-    // si le prochain il y a une collisione t si cette collision est un mur, si oui on toggle la direction
+    for (size_t i = 0; i < objects.size(); i++) {
+        if (objects[i] == this)
+            continue;
+        if (static_cast <Entity *> (objects[i])->getCoords().first == m_coord.first + m_movementFactor.first &&
+            static_cast <Entity *> (objects[i])->getCoords().second == m_coord.second + m_movementFactor.second &&
+            objects[i]->getId().compare("border") == 0)
+                    reverseMovementFactor();
+    }
+}
 
-    // switch de movement factor;
+void Monster::reverseMovementFactor(void)
+{
+    if (m_movementFactor.first == 0) {
+        m_movementFactor.second = m_movementFactor.second * (-1);
+    } else
+        m_movementFactor.first = m_movementFactor.first * (-1);
 }

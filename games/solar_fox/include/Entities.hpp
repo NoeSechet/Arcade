@@ -21,12 +21,14 @@ class Border : public Entity {
         std::string getValue() const { return ""; };
 };
 
-class Monster : public Entity { // commencer à bouger à au premier choix // deux facteru de mouvement
+class Monster : public Entity {
     private:
         COMMAND m_directionLazer = DOWN;
+        Timer m_timerMove;
         Timer m_timerShoot;
+        std::pair <long int, long int> m_movementFactor;
     public:
-        Monster(std::pair <long int, long int> coord, std::string id = "monster", std::string path = "");
+        Monster(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, std::string id = "monster", std::string path = "");
         ~Monster();
         void setDirectionLazer(COMMAND direction);
         std::string getId() const;
@@ -35,6 +37,8 @@ class Monster : public Entity { // commencer à bouger à au premier choix // de
         void move(void);
         void action(std::vector <IObjectToDraw *> &objects);
         void impact(std::vector <IObjectToDraw *> &objects); 
+        private:
+            void reverseMovementFactor(void);
 };
 
 class Player : public Entity {
