@@ -11,6 +11,7 @@ Lazer::Lazer(std::pair <long int, long int> coord, std::pair <long int, long int
 : Entity(coord, id, path)
 {
     m_timer.startTimer();
+    m_timer.setAddedValue(0.05);
     m_movementFactor = movementFactor;
     m_owner = owner;
     m_coord.first += movementFactor.first;
@@ -45,11 +46,11 @@ void Lazer::move(void)
 
 void Lazer::impact(std::vector <IObjectToDraw *> &objects)
 {
-    // for (size_t i = 0; i < objects.size(); i++) {
-    //     if (objects[i] == this)
-    //         continue;
-    //     if (static_cast <Entity *> (objects[i])->getCoords().first == m_coord.first &&
-    //         static_cast <Entity *> (objects[i])->getCoords().second == m_coord.second)
-    //             m_toClear = true;
-    // }
+    for (size_t i = 0; i < objects.size(); i++) {
+        if (objects[i] == this)
+            continue;
+        if (static_cast <Entity *> (objects[i])->getCoords().first == m_coord.first &&
+            static_cast <Entity *> (objects[i])->getCoords().second == m_coord.second)
+                m_toClear = true;
+    }
 }
