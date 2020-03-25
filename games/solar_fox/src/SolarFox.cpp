@@ -76,6 +76,7 @@ namespace games {
 
     int SolarFox::applyInput (COMMAND userInput)
     {
+        if (m_player == nullptr) return 0;
         m_player->setCommand(userInput);
         switch (userInput) {
             case UP: m_player->setPlayerDirection(); break;
@@ -100,11 +101,10 @@ namespace games {
 
         for (size_t i = 0; i < m_objectToDraw.size(); i++)
            static_cast <Entity *> (m_objectToDraw[i])->action(m_objectToDraw);
-        // clearMemory(m_objectToDraw);
+        clearMemory(m_objectToDraw);
         return m_objectToDraw;
     }
 
-    // probleme de clock ! quand apparait tu devrait deja te déplacer
     void SolarFox::clearMemory(std::vector <IObjectToDraw *> &objects)
     {
         for (size_t i = 0; i < objects.size(); i++) {
@@ -114,7 +114,7 @@ namespace games {
                 return clearMemory(objects);
             }
             if (static_cast <Entity *> (objects[i])->getToClear() == true) {
-                if (static_cast <Entity *> (objects[i])->getId().compare("player"))
+                if (isPlayer(objects[i]->getId()))
                     m_player = nullptr;
                 objects.erase(objects.begin() + i);
                 return clearMemory(objects);
@@ -122,6 +122,20 @@ namespace games {
         }
         // if (m_player == nullptr) exit(0);
     }
+
+    bool SolarFox::isPlayer(std::string id) const
+    {
+        if (id.compare("player_up") == 0)
+            return true;
+        if (id.compare("player_down") == 0)
+            return true;
+        if (id.compare("player_right") == 0)
+            return true;
+        if (id.compare("player_left") == 0)
+            return true;
+        return false;
+    }
+
 
     extern "C" {
         IGameInterface *entryPoint()

@@ -27,6 +27,7 @@ namespace games {
             std::vector <IObjectToDraw *> compute();
             void loadClassFromChar(char c, long int x, long int y);
             void clearMemory(std::vector <IObjectToDraw *> &objects);
+            bool isPlayer(std::string id) const;
     };
 
 }
