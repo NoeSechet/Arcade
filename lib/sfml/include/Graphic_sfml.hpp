@@ -28,8 +28,6 @@ namespace graphical {
             sf::RenderWindow m_window;
             sf::Event m_event;
 
-            std::shared_ptr<sf::Sprite> m_spriteHolder = nullptr;
-
         public:
             Graphic_sfml();
             ~Graphic_sfml();
@@ -44,6 +42,7 @@ namespace graphical {
             std::string GetName() const { return m_name; }
 
         private:
+            bool InitWindow(uint width = 1000, uint height = 800);
             AssetSFML *getObjectContent(IObjectToDraw *object) const;
             bool isAlreadyLoaded(IObjectToDraw *object) const;
             bool CheckAssetPath(std::string path);

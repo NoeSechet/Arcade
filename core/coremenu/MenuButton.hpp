@@ -40,36 +40,20 @@ namespace menu {
     };
 
     class MenuLevel : public MenuElem {
-
-        private:
-            std::pair<long int, long int> m_levelSize;
-            std::string m_id;
-            std::string m_path = "";
-            std::tuple<uint, uint, uint, uint> m_sprPos;
-
         public:
             MenuLevel(std::pair <long int, long int> levelSize, std::string id = "level", std::string path = "",
                 std::tuple<uint, uint, uint, uint> sprPos = { 0,0,0,0 }, bool selected = false)
                 : MenuElem(levelSize, id, path, sprPos, selected) {};
-
-                // -- Interface Funtions
-                std::string getId() const { return m_id; }
-                void setId(std::string id) { m_id = id; };
-                std::string getPath() const { return m_path; }
-                Type getType() const { return objects; }
-                std::string getValue() const { return "val"; }
-                std::pair<long int, long int> getCoords() const { return m_levelSize; }
-                std::tuple<uint, uint, uint, uint> getSpritePos() const { return m_sprPos; }
     };
 
     class Border : public MenuElem {
-    public:
-        Border(std::pair <long int, long int> coord, std::string id = "border", std::string path = "",
-        std::tuple<uint, uint, uint, uint> sprPos = { 0,0,0,0 }, bool selected = false)
-            : MenuElem(coord, id, path, sprPos, selected) {};
-        ~Border() {};
-        Type getType() const { return objects; };
-        std::string getValue() const { return ""; };
+        public:
+            Border(std::pair <long int, long int> coord, std::string id = "border", std::string path = "",
+            std::tuple<uint, uint, uint, uint> sprPos = { 0,0,0,0 }, bool selected = false)
+                : MenuElem(coord, id, path, sprPos, selected) {};
+            ~Border() {};
+            Type getType() const { return objects; };
+            std::string getValue() const { return ""; };
     };
 
     class ArcadeButton : public MenuElem

@@ -16,7 +16,7 @@ namespace games {
     class SolarFox : public IGameInterface {
         private:
             std::vector <IObjectToDraw *> m_objectToDraw;
-            Player* m_player;
+            Player* m_player = nullptr;
         public:
             SolarFox();
             ~SolarFox();

@@ -78,11 +78,8 @@ int Core::loop()
 {
     m_gameLibHand = DLLoader<games::IGameInterface>::LoadLib("./games/lib_arcade_SolarFox.so");
     m_gameLib = DLLoader<games::IGameInterface>::GetInstance(m_gameLibHand);
-    m_graphLib->initAssets((m_coreMenu->getAssets()));
-
-    m_graphLib->initAssets(m_gameLib->getAssets());
     m_gameLib->start();
-    m_graphLib->init();
+    m_graphLib->initAssets((m_gameLib->getAssets()));
 
     while (1)
     {
@@ -90,6 +87,7 @@ int Core::loop()
         m_graphLib->draw(m_gameLib->compute());
     }
 
+    // m_graphLib->initAssets((m_coreMenu->getAssets()));
     // while (m_input != EXIT)
     // {
     //     m_input = m_graphLib->getInput();

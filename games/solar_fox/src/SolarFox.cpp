@@ -128,6 +128,7 @@ namespace games {
 
     bool SolarFox::isPlayer(std::string id) const
     {
+        // j'aurai pu faire un find "player"
         if (id.compare("player_up") == 0)
             return true;
         if (id.compare("player_down") == 0)

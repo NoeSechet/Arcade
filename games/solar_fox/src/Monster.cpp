@@ -58,7 +58,8 @@ void Monster::action(std::vector <IObjectToDraw *> &objects)
 
 void Monster::impact(std::vector <IObjectToDraw *> &objects)
 {
+    (void)objects;
     // si le prochain il y a une collisione t si cette collision est un mur, si oui on toggle la direction
 
-    // switch de movement factor
+    // switch de movement factor;
 }

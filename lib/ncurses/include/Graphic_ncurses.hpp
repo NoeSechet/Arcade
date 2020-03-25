@@ -17,7 +17,10 @@ namespace graphical {
     class Graphic_ncurses : public IGraphicalInterface {
         private:
             std::string m_name;
-            std::vector<AssetNcurses *> m_assets;
+            WINDOW *m_win = nullptr;
+            std::pair<uint, uint> m_winSize;
+            std::vector<AssetNcurses *> m_assetList;
+
         public:
             Graphic_ncurses();
             ~Graphic_ncurses();
@@ -31,9 +34,13 @@ namespace graphical {
             std::string GetName() const { return m_name; }
 
         private:
-            std::string getObjectContent(IObjectToDraw *object) const;
-            std::string getFileContent(std::string path);
+            bool InitWindow(uint width, uint height);
+            void PrintAsset(AssetNcurses &asset, uint x_coord, uint y_coord, bool selected);
+            AssetNcurses *getObjectAsset(IObjectToDraw *object);
+            std::string getFileContent(std::string path, uint &x_size, uint &y_size);
             bool isAlreadyLoaded(IObjectToDraw *object) const;
+            void TurnOnHighlight();
+            void TurnOffHighlight();
     };
 
 }
