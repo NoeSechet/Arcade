@@ -78,35 +78,35 @@ int Core::GameStep()
 
 int Core::loop()
 {
-    // m_gameLibHand = DLLoader<games::IGameInterface>::LoadLib("./games/lib_arcade_SolarFox.so");
-    // m_gameLib = DLLoader<games::IGameInterface>::GetInstance(m_gameLibHand);
-    // m_gameLib->start();
-    // m_graphLib->initAssets((m_gameLib->getAssets()));
+    m_gameLibHand = DLLoader<games::IGameInterface>::LoadLib("./games/lib_arcade_SolarFox.so");
+    m_gameLib = DLLoader<games::IGameInterface>::GetInstance(m_gameLibHand);
+    m_gameLib->start();
+    m_graphLib->initAssets((m_gameLib->getAssets()));
 
-    // while (1)
-    // {
-    //     m_gameLib->applyInput(m_graphLib->getInput());
-    //     m_graphLib->draw(m_gameLib->compute());
-    // }
-
-    m_graphLib->initAssets((m_coreMenu->getAssets()));
-    while (m_input != EXIT)
+    while (1)
     {
-        m_input = m_graphLib->getInput();
-
-        switch (m_step) {
-            case MAIN_MENU: MenuStep(); break;
-            case GAME: GameStep(); break;
-            default: break;
-        }
-        switch (m_input) {
-            case PREV_GRAPH: ChangeGraphLib(m_libManager->GetPrevGraphLib().m_path); break;
-            case NEXT_GRAPH: ChangeGraphLib(m_libManager->GetNextGraphLib().m_path); break;
-            case PREV_GAME: ChangeGameLib(m_libManager->GetPrevGameLib().m_path); break;
-            case NEXT_GAME: ChangeGameLib(m_libManager->GetNextGameLib().m_path); break;
-            default:  break;
-        }
+        m_gameLib->applyInput(m_graphLib->getInput());
+        m_graphLib->draw(m_gameLib->compute());
     }
+
+    // m_graphLib->initAssets((m_coreMenu->getAssets()));
+    // while (m_input != EXIT)
+    // {
+    //     m_input = m_graphLib->getInput();
+
+    //     switch (m_step) {
+    //         case MAIN_MENU: MenuStep(); break;
+    //         case GAME: GameStep(); break;
+    //         default: break;
+    //     }
+    //     switch (m_input) {
+    //         case PREV_GRAPH: ChangeGraphLib(m_libManager->GetPrevGraphLib().m_path); break;
+    //         case NEXT_GRAPH: ChangeGraphLib(m_libManager->GetNextGraphLib().m_path); break;
+    //         case PREV_GAME: ChangeGameLib(m_libManager->GetPrevGameLib().m_path); break;
+    //         case NEXT_GAME: ChangeGameLib(m_libManager->GetNextGameLib().m_path); break;
+    //         default:  break;
+    //     }
+    // }
     return 1;
 }
 
