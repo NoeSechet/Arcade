@@ -106,6 +106,8 @@ namespace games {
     {
         (void)userInput;
 
+        // std::cout << userInput << std::endl;
+
         switch (userInput) {
             case DOWN: MoveSelection(1); break;
             case RIGHT: MoveSelection(1); break;
@@ -116,7 +118,7 @@ namespace games {
             default: break;
         }
 
-        return NO_INPUT;
+        return userInput;
     }
 
     void CoreMenu::MoveSelection(int selDir)
