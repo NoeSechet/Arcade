@@ -40,6 +40,7 @@ class IObjectToDraw {
         objects,
         text
     };
+    // virtual ~IObjectToDraw() = default;
     // get id which instances of this type get referenced to
     virtual std::string getId() const = 0;
     // path to directory of assets [terminal.txt, texture.png, mesh.*]
@@ -52,6 +53,9 @@ class IObjectToDraw {
     virtual std::pair<long int, long int> getCoords() const = 0;
     // get position of sprite in texture for animation(x, y, width, height)
     virtual std::tuple <uint, uint, uint, uint> getSpritePos() const = 0;
+    // get color of the asset(0-255, 0-255, 0-255, 0-255)
+    // virtual std::tuple<uint, uint, uint, uint> getColor() const = 0;
+
 };
 
 #endif //OOP_ARCADE_2019_GLOBALHEADERS_HPP

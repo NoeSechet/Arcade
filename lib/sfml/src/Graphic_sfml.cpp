@@ -31,8 +31,8 @@ namespace graphical {
     {
         if (width == 0 || height == 0) {
             std::cout << "Level module undetected, resizing window..." << std::endl;
-            width = 1000;
-            height = 800;
+            width = 1920;
+            height = 1080;
         }
         m_window.create(sf::VideoMode(width, height), "sfml window");
         m_window.setFramerateLimit(30);

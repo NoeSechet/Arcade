@@ -130,9 +130,6 @@ namespace graphical {
         if (selected) {
             TurnOnHighlight();
         }
-        // else {
-        //     TurnOffHighlight();
-        // }
 
         for (size_t e = 0; e < y_size; e += 1)
         {

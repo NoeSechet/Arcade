@@ -74,9 +74,10 @@ namespace games {
         return assets;
     }
 
-    int SolarFox::applyInput (COMMAND userInput)
+    COMMAND SolarFox::applyInput (COMMAND userInput)
     {
-        if (m_player == nullptr) return 0;
+        if (m_player == nullptr)
+            return NO_INPUT;
         m_player->setCommand(userInput);
         switch (userInput) {
             case UP: m_player->setPlayerDirection(); break;
@@ -88,7 +89,7 @@ namespace games {
             case EXIT: break;
             default: break;
         }
-        return 0;
+        return NO_INPUT;
     }
 
     std::vector <IObjectToDraw *> SolarFox::compute()

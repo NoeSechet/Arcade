@@ -102,21 +102,21 @@ namespace games {
         return assets;
     }
 
-    int CoreMenu::applyInput(COMMAND userInput)
+    COMMAND CoreMenu::applyInput(COMMAND userInput)
     {
         (void)userInput;
 
         switch (userInput) {
             case DOWN: MoveSelection(1); break;
-            case RIGHT: MoveSelection(1); return 1; break;
-            case UP: MoveSelection(-1); return 2; break;
-            case LEFT: MoveSelection(-1); return 2; break;
-            case ACTION: return 0; break;
-            case EXIT: return -1;
+            case RIGHT: MoveSelection(1); break;
+            case UP: MoveSelection(-1); break;
+            case LEFT: MoveSelection(-1); break;
+            case ACTION: return ACTION; break;
+            case EXIT: ;
             default: break;
         }
 
-        return 1;
+        return NO_INPUT;
     }
 
     void CoreMenu::MoveSelection(int selDir)

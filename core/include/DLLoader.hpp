@@ -19,12 +19,12 @@ class DLLoader {
 
         static void *LoadLib(const std::string &defaultLib)
         {
+            std::cout << defaultLib << std::endl;
             void *handle = dlopen(defaultLib.c_str(), RTLD_LAZY);
 
-            if (!handle) {
-                fprintf(stderr, "nope wrong lib name\n");
-                exit (EXIT_FAILURE);
-            }
+            if (!handle)
+                throw std::logic_error("Invalid library name or lib compilation failed");
+
             return handle;
         }
 

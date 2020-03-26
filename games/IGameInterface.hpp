@@ -22,7 +22,7 @@ class IGameInterface
         virtual bool start() = 0;                              // initialize game
         virtual bool end() = 0;                                // end game 
         virtual std::vector<IObjectToDraw *> getAssets() const = 0;   // return the assets for display
-        virtual int applyInput (COMMAND userInput) = 0;         // apply user input | specify return keys
+        virtual COMMAND applyInput (COMMAND userInput) = 0;         // apply user input | specify return keys
         virtual std::vector<IObjectToDraw *> compute() = 0;     // calculate next game frame and return it
 };
 

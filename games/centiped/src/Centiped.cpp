@@ -34,10 +34,10 @@ namespace games {
         return m_objectToDraw;
     }
 
-    int Centiped::applyInput (COMMAND userInput)
+    COMMAND Centiped::applyInput (COMMAND userInput)
     {
         (void)userInput;
-        return 0;
+        return NO_INPUT;
     }
 
     std::vector <IObjectToDraw *> Centiped::compute()

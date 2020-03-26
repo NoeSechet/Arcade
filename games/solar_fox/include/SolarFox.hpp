@@ -23,7 +23,7 @@ namespace games {
             bool start();
             bool end();
             std::vector <IObjectToDraw *> getAssets() const;
-            int applyInput (COMMAND userInput);
+            COMMAND applyInput (COMMAND userInput);
             std::vector <IObjectToDraw *> compute();
             void loadClassFromChar(char c, long int x, long int y);
             void clearMemory(std::vector <IObjectToDraw *> &objects);
