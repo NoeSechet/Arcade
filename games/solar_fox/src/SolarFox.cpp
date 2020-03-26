@@ -25,7 +25,10 @@ namespace games {
         std::pair <long int, long int> coord = {x, y};
 
         switch (c) {
-            case 'M': m_objectToDraw.push_back(new Monster(coord)); break;
+            case '1': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0, 1), "monster_right")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(RIGHT); break;
+            case '2': m_objectToDraw.push_back(new Monster(coord, std::make_pair(-1, 0), "monster_down")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(DOWN); break;
+            case '3': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0, -1), "monster_left")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(LEFT); break;
+            case '4': m_objectToDraw.push_back(new Monster(coord, std::make_pair(1, 0), "monster_up")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(UP); break;
             case '^': m_player = new Player(coord); m_objectToDraw.push_back(m_player);  break;
             case '*': m_objectToDraw.push_back(new Target(coord)); break;
             case '#': m_objectToDraw.push_back(new Border(coord)); break;
@@ -68,7 +71,10 @@ namespace games {
         assets.push_back(new Player(default_coord, "player_right", "./games/solar_fox/assets/player_right/"));
         assets.push_back(new Player(default_coord, "player_left", "./games/solar_fox/assets/player_left/"));
         assets.push_back(new Border(default_coord, "border", "./games/solar_fox/assets/border/"));
-        assets.push_back(new Monster(default_coord, "monster", "./games/solar_fox/assets/monster/"));
+        assets.push_back(new Monster(default_coord, default_coord, "monster_up", "./games/solar_fox/assets/monster_up/"));
+        assets.push_back(new Monster(default_coord, default_coord, "monster_left", "./games/solar_fox/assets/monster_left/"));
+        assets.push_back(new Monster(default_coord, default_coord, "monster_right", "./games/solar_fox/assets/monster_right/"));
+        assets.push_back(new Monster(default_coord, default_coord, "monster_down", "./games/solar_fox/assets/monster_down/"));
         assets.push_back(new Target(default_coord, "target", "./games/solar_fox/assets/target/"));
         assets.push_back(new Lazer(default_coord, default_coord, Lazer::O_PLAYER, "lazer", "./games/solar_fox/assets/lazer/"));
         return assets;
@@ -126,6 +132,7 @@ namespace games {
 
     bool SolarFox::isPlayer(std::string id) const
     {
+        // j'aurai pu faire un find "player"
         if (id.compare("player_up") == 0)
             return true;
         if (id.compare("player_down") == 0)

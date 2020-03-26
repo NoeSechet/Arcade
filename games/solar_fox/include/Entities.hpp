@@ -22,21 +22,31 @@ class Border : public Entity {
 };
 
 class Monster : public Entity {
+    private:
+        COMMAND m_directionLazer = DOWN;
+        Timer m_timerMove;
+        Timer m_timerShoot;
+        std::pair <long int, long int> m_movementFactor;
     public:
-        Monster(std::pair <long int, long int> coord, std::string id = "monster", std::string path = "")
-            : Entity(coord, id, path) {};
-        ~Monster() {};
-        std::string getId() const { return m_id; }; // pas de maj pour les id.
-        Type getType() const { return objects; };
-        std::string getValue() const { return ""; };
+        Monster(std::pair <long int, long int> coord, std::pair <long int, long int> movementFactor = {0, 0}, std::string id = "monster", std::string path = "");
+        ~Monster();
+        void setDirectionLazer(COMMAND direction);
+        std::string getId() const;
+        Type getType() const;
+        std::string getValue() const;
+        void move(void);
+        void action(std::vector <IObjectToDraw *> &objects);
+        void impact(std::vector <IObjectToDraw *> &objects); 
+        private:
+            void reverseMovementFactor(void);
 };
 
 class Player : public Entity {
     private:
-        Timer m_timerMove;
-        Timer m_timerShoot;
         COMMAND m_command = NO_INPUT;
         COMMAND m_direction = NO_INPUT;
+        Timer m_timerMove;
+        Timer m_timerShoot;
     public:
         Player(std::pair <long int, long int> coord, std::string id = "player_up", std::string path = "");
         ~Player();
