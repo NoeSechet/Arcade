@@ -21,8 +21,9 @@ class AssetSFML : public IObjectToDraw {
         std::shared_ptr<sf::Sprite> m_spr = nullptr;
         std::shared_ptr<sf::Texture> m_tex = nullptr;
         sf::Vector2u m_texSize = { 0, 0 };
-        std::tuple<uint, uint, uint, uint> m_spriPos = { 0,0,0,0 };
         std::pair<long int, long int> m_coord = { 0,0 };
+        std::tuple<uint, uint, uint, uint> m_spriPos = { 0,0,0,0 };
+        std::tuple<uint, uint, uint, uint> m_color = {0,0,0,0};
 
     public:
         AssetSFML(const std::string &id, Type type, const std::string &path, std::tuple<uint, uint, uint, uint> sprRec)
@@ -48,6 +49,7 @@ class AssetSFML : public IObjectToDraw {
         std::string getValue() const { return m_value; };
         std::pair<long int, long int> getCoords() const { return m_coord; };
         std::tuple <uint, uint, uint, uint> getSpritePos() const { return m_spriPos; }
+        std::tuple<uint, uint, uint, uint> getColor() const { return m_color; }
         // --
 
         std::shared_ptr<sf::Sprite> getSprite() { return m_spr; }

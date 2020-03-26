@@ -54,7 +54,7 @@ class IObjectToDraw {
     // get position of sprite in texture for animation(x, y, width, height)
     virtual std::tuple <uint, uint, uint, uint> getSpritePos() const = 0;
     // get color of the asset(0-255, 0-255, 0-255, 0-255)
-    // virtual std::tuple<uint, uint, uint, uint> getColor() const = 0;
+    virtual std::tuple<uint, uint, uint, uint> getColor() const = 0;
 
 };
 

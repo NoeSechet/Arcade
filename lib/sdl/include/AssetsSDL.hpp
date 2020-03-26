@@ -26,6 +26,7 @@ class AssetSDL : public IObjectToDraw {
         SDL_Texture *m_tex = nullptr;
         SDL_Rect m_rect = {0, 0, 0, 0};
         std::tuple<uint, uint, uint, uint> rect;
+        std::tuple<uint, uint, uint, uint> m_color = {0,0,0,0};
 
     public:
         AssetSDL(const std::string &id, Type type, const std::string &path, std::tuple<uint, uint, uint, uint> sprRec, SDL_Renderer *renderer)
@@ -46,9 +47,11 @@ class AssetSDL : public IObjectToDraw {
         std::string getPath() const { return std::string(""); };
         Type getType() const {return m_type; };
         std::string getValue() const { return m_value; };
-        std::tuple <uint, uint, uint, uint> getSpritePos() const { return rect; }
         std::pair<long int, long int> getCoords() const { return std::make_pair<uint, uint>(m_rect.x, m_rect.y); };
         SDL_Texture *getTex() const { return m_tex; }
+        std::tuple <uint, uint, uint, uint> getSpritePos() const { return rect; }
+        std::tuple<uint, uint, uint, uint> getColor() const { return m_color; }
+
         SDL_Rect getRect() const { return m_rect; }
 };
 

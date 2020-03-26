@@ -20,6 +20,7 @@ namespace menu {
             std::string m_path = "";
             std::tuple<uint, uint, uint, uint> m_sprPos;
             bool m_selected = false;
+            std::tuple<uint, uint, uint, uint> m_color = {0,0,0,0};
 
         public:
             MenuElem(std::pair<uint, uint> coord, std::string id, std::string path,
@@ -33,6 +34,7 @@ namespace menu {
             virtual Type getType() const { return objects; }
             virtual std::string getValue() const { return "val"; }
             std::pair<long int, long int> getCoords() const { return m_coord; }
+            std::tuple<uint, uint, uint, uint> getColor() const { return m_color; }
 
             std::tuple<uint, uint, uint, uint> getSpritePos() const { return m_sprPos; }
             void SetSelected(bool selected) { m_selected = selected; }

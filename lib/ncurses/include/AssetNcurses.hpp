@@ -17,7 +17,7 @@ class AssetNcurses : public IObjectToDraw  {
         Type m_type = objects;
         std::string m_value = "";
         std::tuple<uint, uint, uint, uint> m_spriPos = { 0,0,0,0 };
-
+        std::tuple<uint, uint, uint, uint> m_color = {0,0,0,0};
 
     public:
         AssetNcurses(std::string id, Type type, std::string value, std::tuple<uint, uint, uint, uint> sprRec)
@@ -32,6 +32,7 @@ class AssetNcurses : public IObjectToDraw  {
         std::string getValue() const {return m_value; };
         std::pair<long int, long int> getCoords() const { return std::pair <long int, long int>(); };
         std::tuple <uint, uint, uint, uint> getSpritePos() const { return m_spriPos; };
+        std::tuple<uint, uint, uint, uint> getColor() const { return m_color; }
         // --
 };
 
