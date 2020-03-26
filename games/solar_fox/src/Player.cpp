@@ -54,10 +54,10 @@ void Player::move(void)
     if (m_timerMove.getElapsedSeconds() < 0.2) return;
     m_timerMove.restartTimer();
     switch (m_direction) {
-        case RIGHT: m_coord.first += 1; break;
-        case LEFT: m_coord.first -= 1; break;
-        case DOWN: m_coord.second += 1; break;
-        case UP: m_coord.second -= 1; break;
+        case RIGHT: m_coord.first += (1 * 32); break;
+        case LEFT: m_coord.first -= (1 * 32); break;
+        case DOWN: m_coord.second += (1 * 32); break;
+        case UP: m_coord.second -= (1 * 32); break;
         default: break;
     }
 }
@@ -68,10 +68,10 @@ void Player::action(std::vector <IObjectToDraw *> &objects)
     if (m_timerShoot.getElapsedSeconds() < 0.7) return;
     m_timerShoot.restartTimer();
     switch (m_direction) {
-        case RIGHT: objects.push_back(new Lazer(this->m_coord, std::make_pair(1, 0), Lazer::O_PLAYER)); break;
-        case LEFT: objects.push_back(new Lazer(this->m_coord, std::make_pair(-1, 0), Lazer::O_PLAYER)); break;
-        case DOWN: objects.push_back(new Lazer(this->m_coord, std::make_pair(0, 1), Lazer::O_PLAYER)); break;
-        case UP: objects.push_back(new Lazer(this->m_coord, std::make_pair(0, -1), Lazer::O_PLAYER)); break;
+        case RIGHT: objects.push_back(new Lazer(this->m_coord, std::make_pair(1 * 32, 0 * 32), Lazer::O_PLAYER)); break;
+        case LEFT: objects.push_back(new Lazer(this->m_coord, std::make_pair(-1 * 32, 0 * 32), Lazer::O_PLAYER)); break;
+        case DOWN: objects.push_back(new Lazer(this->m_coord, std::make_pair(0 * 32, 1 * 32), Lazer::O_PLAYER)); break;
+        case UP: objects.push_back(new Lazer(this->m_coord, std::make_pair(0 * 32, -1 * 32), Lazer::O_PLAYER)); break;
         default: break;
     }
 }

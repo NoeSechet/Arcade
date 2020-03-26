@@ -22,13 +22,13 @@ namespace games {
 
     void SolarFox::loadClassFromChar(char c, long int x, long int y)
     {
-        std::pair <long int, long int> coord = {x, y};
+        std::pair <long int, long int> coord = {x * 32, y * 32};
 
         switch (c) {
-            case '1': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0, 1), "monster_right")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(RIGHT); break;
-            case '2': m_objectToDraw.push_back(new Monster(coord, std::make_pair(-1, 0), "monster_down")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(DOWN); break;
-            case '3': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0, -1), "monster_left")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(LEFT); break;
-            case '4': m_objectToDraw.push_back(new Monster(coord, std::make_pair(1, 0), "monster_up")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(UP); break;
+            case '1': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0 * 32, 1 * 32), "monster_right")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(RIGHT); break;
+            case '2': m_objectToDraw.push_back(new Monster(coord, std::make_pair(-1 * 32, 0 * 32), "monster_down")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(DOWN); break;
+            case '3': m_objectToDraw.push_back(new Monster(coord, std::make_pair(0 * 32, -1 * 32), "monster_left")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(LEFT); break;
+            case '4': m_objectToDraw.push_back(new Monster(coord, std::make_pair(1 * 32, 0 * 32), "monster_up")); static_cast <Monster *> (m_objectToDraw[m_objectToDraw.size()-1])->setDirectionLazer(UP); break;
             case '^': m_player = new Player(coord); m_objectToDraw.push_back(m_player);  break;
             case '*': m_objectToDraw.push_back(new Target(coord)); break;
             case '#': m_objectToDraw.push_back(new Border(coord)); break;

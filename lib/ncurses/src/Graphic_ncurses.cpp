@@ -109,8 +109,8 @@ namespace graphical {
         erase();
         for (auto &obj : objects) {
             PrintAsset(*getObjectAsset(obj),
-                obj->getCoords().first,
-                obj->getCoords().second,
+                obj->getCoords().first / 32, // Based on sfml
+                obj->getCoords().second / 32,
                 (obj->getId().find("SEL") != std::string::npos)
             );
         }

@@ -54,10 +54,10 @@ void Monster::action(std::vector <IObjectToDraw *> &objects)
     if (m_timerShoot.getElapsedSeconds() < 1) return;
     m_timerShoot.restartTimer();
     switch (m_directionLazer) {
-        case RIGHT: objects.push_back(new Lazer(this->m_coord, std::make_pair(1, 0), Lazer::O_MONSTER)); break;
-        case LEFT: objects.push_back(new Lazer(this->m_coord, std::make_pair(-1, 0), Lazer::O_MONSTER)); break;
-        case DOWN: objects.push_back(new Lazer(this->m_coord, std::make_pair(0, 1), Lazer::O_MONSTER)); break;
-        case UP: objects.push_back(new Lazer(this->m_coord, std::make_pair(0, -1), Lazer::O_MONSTER)); break;
+        case RIGHT: objects.push_back(new Lazer(this->m_coord, std::make_pair(1 * 32, 0 * 32), Lazer::O_MONSTER)); break;
+        case LEFT: objects.push_back(new Lazer(this->m_coord, std::make_pair(-1 * 32, 0 * 32), Lazer::O_MONSTER)); break;
+        case DOWN: objects.push_back(new Lazer(this->m_coord, std::make_pair(0 * 32, 1 * 32), Lazer::O_MONSTER)); break;
+        case UP: objects.push_back(new Lazer(this->m_coord, std::make_pair(0 * 32, -1 * 32), Lazer::O_MONSTER)); break;
         default: break;
     }
 }
